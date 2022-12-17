@@ -14,6 +14,7 @@ matplotlib.rcParams['font.family']='Calibri'
 matplotlib.rcParams['font.size']=11
 plt.rcParams["axes.edgecolor"] = "black"
 plt.rcParams["axes.linewidth"] = 1
+plt.rcParams['figure.dpi'] = 300
 
 CONT_RES=0
 CONT_TOT=1
@@ -173,17 +174,50 @@ def SubsetScatter(data,color):
 #plt.show()
 #data2=MeltTimesteps(data)
 #print("here")
-data=pd.read_csv("NewDrug/NewDrug.csv")
-data['moveDiscount']=data['moveRateDiscount']
-data=data[(data.id==49)&(data.moveDiscount==0.01)&(data.drugSwitch==0.9)]
+
+#data=pd.read_csv("Sweep/Sweep.csv")
+#data=data.groupby(["mutProb","moveDiscount","divDiscount","migExp","divExp"],as_index=False).mean()
+#pd.to_pickle(data,"Sweep/SweepAvg.p")
+
+"""Sweep Summary"""
+#data=pd.read_pickle("Sweep/SweepAvg.p")
+#sns.scatterplot(data=data,x='ProgAdap',y='ProgCont')
+#plt.axline((0,0),(1,1),zorder=0)
+#plt.show()
+
+"""Plot of AT Better Subset"""
+#data=pd.read_pickle("Sweep/SweepAvg.p")
+#params=["mutProb","moveDiscount","divDiscount","migExp","divExp"]
+#data['AdapContRatio']=data['ProgAdap']/data['ProgCont']
+##print(len(data))
+#data=data[data.AdapContRatio>1]
+##print(len(data))
+##sns.scatterplot(data=data,x='ProgAdap',y='AdapContRatio')
+##plt.axline((0,0),(1,1),zorder=0)
+##plt.show()
+#
+#for i,param in enumerate(params):
+#    plt.subplot(2,3,i+1)
+#    sns.scatterplot(data=data,x='AdapContRatio',y=param,hue='AdapContRatio',legend=False)
+#plt.tight_layout()
+#plt.show()
+
+"""SweepII plot"""
+data=pd.read_csv("SweepII/SweepII.csv")
+g=sns.FacetGrid(data=data,row='mutProb',col='divTumor',sharey=False,sharex=False)
+g.map_dataframe(SubsetScatter)
+plt.show()
+
+
+#data=data[(data.id==49)&(data.moveDiscount==0.01)&(data.drugSwitch==0.9)]
 #g=sns.FacetGrid(data=data,row='moveDiscount',col='drugSwitch',sharey=False,sharex=False)
 ##g.map_dataframe(sns.lineplot,'day','population','type',units='id',estimator=None)
 #g.map_dataframe(sns.lineplot,'day','population','type')
 #g.add_legend()
 #plt.show()
-data=MeltTimesteps(data)
-data=data[(data.label.str.contains('Div'))|(data.label.str.contains('Mig'))]
-sns.lineplot(data,x='day',y='measure',hue='type')
+#data=MeltTimesteps(data)
+#data=data[(data.label.str.contains('Div'))|(data.label.str.contains('Mig'))]
+#sns.lineplot(data,x='day',y='measure',hue='type')
 #pd.to_pickle(data,"SmallInitialTumor/meltedSteps.p")
 #data=pd.read_pickle("SmallInitialTumor/meltedSteps.p")
 #data=pd.read_csv("SmallInitialTumor/WhenDoesAtWorkIII.csv")
@@ -197,8 +231,8 @@ sns.lineplot(data,x='day',y='measure',hue='type')
 #g.map_dataframe(sns.lineplot,'day','measure','type',units='id',estimator=None)
 #data=pd.melt(data,id_vars=['idx','tumorSize','mutRate','path'],value_vars=['progAdap','progCont'],var_name='treatment',value_name='progression')
 #g.add_legend()
-plt.tight_layout()
-plt.show()
+#plt.tight_layout()
+#plt.show()
 
 #print("here")
 #GridPlot(df,"mutRate","tumorSize","SmallInitialTumor")
