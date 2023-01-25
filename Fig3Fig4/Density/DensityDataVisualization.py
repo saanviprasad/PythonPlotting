@@ -12,7 +12,8 @@ plt.rcParams["axes.edgecolor"] = "black"
 plt.rcParams["axes.linewidth"] = 1
 plt.rcParams['figure.dpi'] = 300
 def SubsetScatter(data,color):
-    sns.kdeplot(data,x='ProgAdap',y='ProgCont')
+    sns.scatterplot(data,x='ProgAdap',y='ProgCont')
+#$    sns.kdeplot(data,x='ProgAdap',y='ProgCont')
     plt.axline((0,0),(1,1),zorder=0)
 
 

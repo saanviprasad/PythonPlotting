@@ -181,13 +181,15 @@ def SubsetScatter(data,color):
 
 """Sweep Summary"""
 #data=pd.read_pickle("Sweep/SweepAvg.p")
-#sns.scatterplot(data=data,x='ProgAdap',y='ProgCont')
+#params=["mutProb","moveDiscount","divDiscount","migExp","divExp"]
+#for i,p in enumerate(params):
+#    plt.subplot(2,3,i+1)
+#    sns.scatterplot(data=data,x='ProgAdap',y='ProgCont',hue=p)
 #plt.axline((0,0),(1,1),zorder=0)
 #plt.show()
 
 """Plot of AT Better Subset"""
 #data=pd.read_pickle("Sweep/SweepAvg.p")
-#params=["mutProb","moveDiscount","divDiscount","migExp","divExp"]
 #data['AdapContRatio']=data['ProgAdap']/data['ProgCont']
 ##print(len(data))
 #data=data[data.AdapContRatio>1]
@@ -208,6 +210,7 @@ g=sns.FacetGrid(data=data,row='mutProb',col='divTumor',sharey=False,sharex=False
 g.map_dataframe(SubsetScatter)
 plt.show()
 
+print(sns.__version__)
 
 #data=data[(data.id==49)&(data.moveDiscount==0.01)&(data.drugSwitch==0.9)]
 #g=sns.FacetGrid(data=data,row='moveDiscount',col='drugSwitch',sharey=False,sharex=False)
