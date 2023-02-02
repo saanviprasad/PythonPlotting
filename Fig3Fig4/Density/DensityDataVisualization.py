@@ -17,7 +17,7 @@ def SubsetScatter(data,color):
     plt.axline((0,0),(1,1),zorder=0)
 
 
-Data = pd.read_csv("DensityResults.csv")
+Data = pd.read_csv("DensityResultsLargeResGrowth.csv")
 
 grid = sns.FacetGrid(Data, row="density")
 
