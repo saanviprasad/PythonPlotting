@@ -10,16 +10,18 @@ matplotlib.rcParams['font.family']='Calibri'
 matplotlib.rcParams['font.size']=11
 plt.rcParams["axes.edgecolor"] = "black"
 plt.rcParams["axes.linewidth"] = 1
-plt.rcParams['figure.dpi'] = 300
-def SubsetScatter(data,color):
-    sns.scatterplot(data,x='ProgAdap',y='ProgCont')
-#$    sns.kdeplot(data,x='ProgAdap',y='ProgCont')
+plt.rcParams['figure.dpi'] = 100
+#def SubsetScatter(data,color):
+
+def SubsetScatter(data, color):
+    sns.kdeplot(data = data,x='ProgAdap',y='ProgCont', hue = 'resgrowth')
     plt.axline((0,0),(1,1),zorder=0)
 
 
-Data = pd.read_csv("DensityResultsLargeResGrowth.csv")
+data = pd.read_csv("Phenotypes.csv")
 
-grid = sns.FacetGrid(Data, row="density")
+fig = sns.FacetGrid(data= data ,row= 'angiopheno', col='glucpheno')
+fig.map_dataframe(SubsetScatter)
+plt.tight_layout()
 
-grid.map_dataframe(SubsetScatter)
 plt.show()
