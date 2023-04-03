@@ -3,3 +3,6 @@
 *.gif
 Fig3Fig4/Sweep/Sweep.csv
 *.csv
+.idea/misc.xml
+.idea/pythonProject2.iml
+*.iml

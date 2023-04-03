@@ -205,12 +205,24 @@ def SubsetScatter(data,color):
 #plt.show()
 
 """SweepII plot"""
-data=pd.read_csv("SweepII/SweepII.csv")
-g=sns.FacetGrid(data=data,row='mutProb',col='divTumor',sharey=False,sharex=False)
-g.map_dataframe(SubsetScatter)
-plt.show()
+#data=pd.read_csv("SweepII/SweepII.csv")
+#g=sns.FacetGrid(data=data,row='mutProb',col='divTumor',sharey=False,sharex=False)
+#g.map_dataframe(SubsetScatter)
+#plt.show()
+#
+#print(sns.__version__)
 
-print(sns.__version__)
+"""MELT LAYER DATA"""
+def MeltLayers(rawData):
+    melted=pd.melt(rawData,id_vars=rawData.columns[:7],value_vars=rawData.columns[7:],var_name='measureRaw',value_name='value')
+    melted[['measure','layer','day']]=melted.measureRaw.str.split('~',expand=True)
+    melted=melted.astype({'day':'int','layer':'int'})
+    return melted
+rawData=pd.read_csv(r"Density\test.csv")
+data=MeltLayers(rawData)
+example=data[data.day==100]
+sns.lineplot(data=example,x='layer',y='value',hue='measure')
+plt.show()
 
 #data=data[(data.id==49)&(data.moveDiscount==0.01)&(data.drugSwitch==0.9)]
 #g=sns.FacetGrid(data=data,row='moveDiscount',col='drugSwitch',sharey=False,sharex=False)
